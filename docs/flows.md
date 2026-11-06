@@ -36,7 +36,7 @@ surface provides it (for example `spaceId` / `pageId` on Experience Pages).
 
 See [`HandshakePayload`](https://kadanza-io.github.io/extension-sdk/interfaces/HandshakePayload.html) for the ACK data and [`HandshakeInitPayload`](https://kadanza-io.github.io/extension-sdk/interfaces/HandshakeInitPayload.html) for the INIT payload.
 
-After `connect` starts, [`getAllowedOrigin()`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#getallowedorigin) and [`getTenantUrl()`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#gettenanturl) expose the parent origin and raw `tenantUrl` search param. After handshake, [`getApiUrl()`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#getapiurl) returns the Platform API origin.
+After `connect` starts, [`getAllowedOrigin()`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#getallowedorigin) and [`getTenantUrl()`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#gettenanturl) expose the parent origin and raw `tenantUrl` search param. After handshake, [`getApiUrl()`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#getapiurl) returns the Platform API base URL (see [API calls](#api-calls)).
 
 ## Design tokens
 
@@ -66,8 +66,13 @@ Read the cached copy later with [`getDesignTokens()`](https://kadanza-io.github.
 ## API calls
 
 Calls the Kadanza Platform API with connection details managed by the SDK.
-The API origin is derived from `extensionDetails.baseUrl`; the latest auth
+Requests go to [`getApiUrl()`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#getapiurl) + endpoint; the latest auth
 token JWT and tenant domain are added as `Authorization` and `X-Tenant` headers.
+
+The API base URL comes from `extensionDetails.apiUrl` — the same string the
+parent uses as its own HTTP client base URL (an origin, or an origin plus a
+path). Hosts that omit `apiUrl` fall back to `api.{hostname}` derived from
+`extensionDetails.baseUrl`, the parent application URL.
 
 ```ts
 interface User {
@@ -96,7 +101,7 @@ The SDK owns the `Authorization` and `X-Tenant` headers. Other fetch options and
 headers can be supplied through `RequestInit`.
 
 See [`apiCall`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#apicall).
-Use [`getApiUrl()`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#getapiurl) when you need the derived API origin for custom requests.
+Use [`getApiUrl()`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#getapiurl) when you need the API base URL for custom requests.
 
 ## Auth token refresh
 

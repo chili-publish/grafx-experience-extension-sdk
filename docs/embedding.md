@@ -29,6 +29,8 @@ The Kadanza parent app should use the host API from this package — do not reim
 
 `HANDSHAKE_ACK` context is optional. Send `designTokens` whenever a tenant is in context. Include `spaceId` / `pageId` only on Experience Pages. The child SDK still connects if a field is omitted.
 
+In `extensionDetails`, `baseUrl` is the parent application URL and `apiUrl` is the Platform API base URL — send the exact string your HTTP client uses as its base URL (do not strip a path). Without `apiUrl` the child guesses `api.{hostname}` from `baseUrl`; see [API calls](flows.md#api-calls).
+
 ```ts
 import {
   ExtensionSDKHost,
@@ -51,7 +53,8 @@ const extensionSDKHost = new ExtensionSDKHost({
   ): Promise<Partial<HandshakePayload>> => {
     const routingType = extensionSDKHost.getRoutingType();
     // Mint / load auth token + context; return HandshakePayload
-    // (designTokens when a tenant is in context; spaceId/pageId on FO only)
+    // (extensionDetails.apiUrl = your API client base URL;
+    //  designTokens when a tenant is in context; spaceId/pageId on FO only)
   },
   resolveAuthToken: async () => {
     // Mint a fresh auth token for TOKEN_REFRESH
