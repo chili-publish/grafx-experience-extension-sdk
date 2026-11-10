@@ -1,5 +1,7 @@
+import type { ExtensionDetails } from "./types";
+
 interface ApiRequestContext {
-  baseUrl: string;
+  apiUrl: string;
   tenantDomain: string;
   authTokenJwt: string;
 }
@@ -15,14 +17,40 @@ export function deriveApiUrl(baseUrl: string): string {
   return url.origin;
 }
 
-function resolveApiEndpoint(baseUrl: string, endpoint: string): string {
+/**
+ * Platform API base URL from handshake context.
+ *
+ * Prefers the host-sent `apiUrl` as-is; otherwise derives it from `baseUrl`
+ * (hosts that predate `apiUrl`).
+ */
+export function resolveApiUrl(
+  extensionDetails: ExtensionDetails | null,
+): string | null {
+  const apiUrl = extensionDetails?.apiUrl;
+  if (typeof apiUrl === "string" && apiUrl) {
+    return apiUrl;
+  }
+
+  const baseUrl = extensionDetails?.baseUrl;
+  if (!baseUrl) {
+    return null;
+  }
+
+  try {
+    return deriveApiUrl(baseUrl);
+  } catch {
+    return null;
+  }
+}
+
+function resolveApiEndpoint(apiUrl: string, endpoint: string): string {
   if (!endpoint.startsWith("/") || endpoint.startsWith("//")) {
     throw new Error(
       'API endpoint must be a root-relative path starting with a single "/".',
     );
   }
 
-  return `${deriveApiUrl(baseUrl).replace(/\/+$/, "")}${endpoint}`;
+  return `${apiUrl.replace(/\/+$/, "")}${endpoint}`;
 }
 
 export async function callApi<T>(
@@ -39,7 +67,7 @@ export async function callApi<T>(
   headers.set("Authorization", `Bearer ${context.authTokenJwt}`);
   headers.set("X-Tenant", context.tenantDomain);
 
-  const response = await fetch(resolveApiEndpoint(context.baseUrl, endpoint), {
+  const response = await fetch(resolveApiEndpoint(context.apiUrl, endpoint), {
     ...options,
     headers,
   });

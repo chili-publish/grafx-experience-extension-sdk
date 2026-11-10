@@ -1,4 +1,4 @@
-import { callApi, deriveApiUrl } from "./api";
+import { callApi, resolveApiUrl } from "./api";
 import { CONNECTION_EVENTS } from "./events";
 import { postToParent, subscribeToParentMessages } from "./messaging";
 import { readTenantUrlFromLocation, resolveAllowedOrigin } from "./origin";
@@ -115,23 +115,26 @@ export interface IExtensionSDK {
   getTenantUrl(): string | null;
 
   /**
-   * Platform API origin derived from handshake `baseUrl`.
-   * `null` until connected, or when `extensionDetails.baseUrl` was omitted.
+   * Platform API base URL the parent uses for its own API calls.
+   *
+   * Returns handshake `extensionDetails.apiUrl` as sent. When the host omits
+   * it, falls back to deriving `api.{hostname}` from `extensionDetails.baseUrl`.
+   * `null` until connected, or when neither field is usable.
    */
   getApiUrl(): string | null;
 
   /**
    * Calls the Kadanza Platform API with the current connection credentials.
    *
-   * The API origin is derived from the handshake `baseUrl`. Authorization and
-   * tenant headers are managed by the SDK and cannot be overridden.
+   * Requests go to {@link getApiUrl} + `endpoint`. Authorization and tenant
+   * headers are managed by the SDK and cannot be overridden.
    *
    * @typeParam T - Expected JSON response body.
    * @param endpoint - Root-relative API path.
    * @param options - Standard fetch options.
    * @throws When not connected, handshake did not include `authToken` and
-   *   `extensionDetails` (`baseUrl`, `tenantDomain`), the endpoint is invalid,
-   *   the request fails, or the response is not successful JSON.
+   *   `extensionDetails` (`apiUrl` or `baseUrl`, `tenantDomain`), the endpoint
+   *   is invalid, the request fails, or the response is not successful JSON.
    */
   apiCall<T>(endpoint: string, options?: RequestInit): Promise<T>;
 
@@ -349,16 +352,7 @@ export class ExtensionSDK implements IExtensionSDK {
   }
 
   getApiUrl(): string | null {
-    const baseUrl = this.#extensionDetails?.baseUrl;
-    if (!baseUrl) {
-      return null;
-    }
-
-    try {
-      return deriveApiUrl(baseUrl);
-    } catch {
-      return null;
-    }
+    return resolveApiUrl(this.#extensionDetails);
   }
 
   async apiCall<T>(
@@ -367,20 +361,20 @@ export class ExtensionSDK implements IExtensionSDK {
   ): Promise<T> {
     this.#assertConnected();
 
-    const baseUrl = this.#extensionDetails?.baseUrl;
+    const apiUrl = this.getApiUrl();
     const tenantDomain = this.#extensionDetails?.tenantDomain;
     const authTokenJwt = this.#authToken?.jwt;
 
-    if (!baseUrl || !tenantDomain || !authTokenJwt) {
+    if (!apiUrl || !tenantDomain || !authTokenJwt) {
       throw new Error(
-        "API calls require handshake authToken and extensionDetails (baseUrl, tenantDomain).",
+        "API calls require handshake authToken and extensionDetails (apiUrl or baseUrl, tenantDomain).",
       );
     }
 
     return callApi<T>(
       endpoint,
       {
-        baseUrl,
+        apiUrl,
         tenantDomain,
         authTokenJwt,
       },

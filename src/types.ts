@@ -21,8 +21,14 @@ export interface ExtensionDetails {
   extensionId?: string;
   tenantId?: string;
   tenantDomain?: string;
-  /** Base URL of the parent application (used to derive the Platform API origin). */
+  /** Base URL of the parent application. */
   baseUrl?: string;
+  /**
+   * Platform API base URL the parent uses for its own API calls — the same
+   * string as the parent's HTTP client base URL. May be an origin or an origin
+   * plus a path. Older hosts omit it. Read via {@link IExtensionSDK.getApiUrl}.
+   */
+  apiUrl?: string;
   /** Space that owns the Experience Page. Omitted in Admin Console. */
   spaceId?: string;
   /** Experience Page id. Omitted in Admin Console. */
