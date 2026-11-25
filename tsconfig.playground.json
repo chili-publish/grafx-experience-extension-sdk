@@ -3,7 +3,7 @@
   "compilerOptions": {
     "types": ["vite/client"],
     "paths": {
-      "@kadanza/extension-sdk": ["./src/index.ts"]
+      "@chili-publish/experience-extension-sdk": ["./src/index.ts"]
     }
   },
   "include": ["playground", "src"]

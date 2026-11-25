@@ -1,23 +1,24 @@
 {
-  "name": "@kadanza/extension-sdk",
+  "name": "@chili-publish/experience-extension-sdk",
   "version": "0.3.0",
-  "description": "Helpers for building extensions",
+  "description": "Helpers for building GraFx Experience extensions",
   "keywords": [
-    "kadanza",
+    "chili-publish",
+    "grafx",
     "sdk",
     "extension",
     "browser"
   ],
-  "homepage": "https://github.com/kadanza-io/extension-sdk#readme",
+  "homepage": "https://github.com/chili-publish/experience-extension-sdk#readme",
   "bugs": {
-    "url": "https://github.com/kadanza-io/extension-sdk/issues"
+    "url": "https://github.com/chili-publish/experience-extension-sdk/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kadanza-io/extension-sdk.git"
+    "url": "git+https://github.com/chili-publish/experience-extension-sdk.git"
   },
   "license": "MIT",
-  "author": "Kadanza team",
+  "author": "chili-publish",
   "type": "module",
   "exports": {
     ".": {

@@ -8,10 +8,10 @@ Establishes the connection and receives the initial context from the parent.
 
 Wire: `HANDSHAKE_INIT` → `HANDSHAKE_ACK`
 
-[`createExtensionSDK()`](https://kadanza-io.github.io/extension-sdk/functions/createExtensionSDK.html) returns a singleton — use one SDK instance per app. Repeated [`connect()`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#connect) calls are safe: an in-flight handshake shares one promise; after connect, the cached payload is returned and `authTokenAutoRefresh` / `authTokenBufferMs` are re-applied without another init.
+[`createExtensionSDK()`](https://chili-publish.github.io/experience-extension-sdk/functions/createExtensionSDK.html) returns a singleton — use one SDK instance per app. Repeated [`connect()`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#connect) calls are safe: an in-flight handshake shares one promise; after connect, the cached payload is returned and `authTokenAutoRefresh` / `authTokenBufferMs` are re-applied without another init.
 
 ```ts
-import { createExtensionSDK } from "@kadanza/extension-sdk";
+import { createExtensionSDK } from "@chili-publish/experience-extension-sdk";
 
 const sdk = createExtensionSDK();
 const { authToken, extensionDetails, designTokens, pageSettings } =
@@ -34,13 +34,13 @@ Handshake completes when the parent ACKs. Context fields are optional and
 normalized to `null` when the host omits them. Use a field only when that
 surface provides it (for example `spaceId` / `pageId` on Experience Pages).
 
-See [`HandshakePayload`](https://kadanza-io.github.io/extension-sdk/interfaces/HandshakePayload.html) for the ACK data and [`HandshakeInitPayload`](https://kadanza-io.github.io/extension-sdk/interfaces/HandshakeInitPayload.html) for the INIT payload.
+See [`HandshakePayload`](https://chili-publish.github.io/experience-extension-sdk/interfaces/HandshakePayload.html) for the ACK data and [`HandshakeInitPayload`](https://chili-publish.github.io/experience-extension-sdk/interfaces/HandshakeInitPayload.html) for the INIT payload.
 
-After `connect` starts, [`getAllowedOrigin()`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#getallowedorigin) and [`getTenantUrl()`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#gettenanturl) expose the parent origin and raw `tenantUrl` search param. After handshake, [`getApiUrl()`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#getapiurl) returns the Platform API base URL (see [API calls](#api-calls)).
+After `connect` starts, [`getAllowedOrigin()`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#getallowedorigin) and [`getTenantUrl()`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#gettenanturl) expose the parent origin and raw `tenantUrl` search param. After handshake, [`getApiUrl()`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#getapiurl) returns the Platform API base URL (see [API calls](#api-calls)).
 
 ## Design tokens
 
-[`designTokens`](https://kadanza-io.github.io/extension-sdk/interfaces/DesignTokens.html) is tenant branding for aligning extension UI with the host. The parent should send it whenever a tenant is in context (Experience Pages and Admin Console). It is **not** required to complete handshake.
+[`designTokens`](https://chili-publish.github.io/experience-extension-sdk/interfaces/DesignTokens.html) is tenant branding for aligning extension UI with the host. The parent should send it whenever a tenant is in context (Experience Pages and Admin Console). It is **not** required to complete handshake.
 
 | Token | Typical host source | Suggested use |
 | --- | --- | --- |
@@ -61,12 +61,12 @@ if (designTokens?.primaryColor) {
 }
 ```
 
-Read the cached copy later with [`getDesignTokens()`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#getdesigntokens).
+Read the cached copy later with [`getDesignTokens()`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#getdesigntokens).
 
 ## API calls
 
-Calls the Kadanza Platform API with connection details managed by the SDK.
-Requests go to [`getApiUrl()`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#getapiurl) + endpoint; the latest auth
+Calls the GraFx Experience Platform API with connection details managed by the SDK.
+Requests go to [`getApiUrl()`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#getapiurl) + endpoint; the latest auth
 token JWT and tenant domain are added as `Authorization` and `X-Tenant` headers.
 
 The API base URL comes from `extensionDetails.apiUrl` — the same string the
@@ -94,14 +94,14 @@ const asset = await sdk.apiCall<Asset>("/platform/v1/api/assets", {
 Endpoints must be root-relative paths beginning with a single `/`. Successful
 responses are parsed as JSON. Non-2xx responses throw with the HTTP status.
 A `401` is not retried automatically; use
-[`emitRequestAuthTokenRefresh()`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#emitrequestauthtokenrefresh)
+[`emitRequestAuthTokenRefresh()`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#emitrequestauthtokenrefresh)
 when an explicit refresh is needed.
 
 The SDK owns the `Authorization` and `X-Tenant` headers. Other fetch options and
 headers can be supplied through `RequestInit`.
 
-See [`apiCall`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#apicall).
-Use [`getApiUrl()`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#getapiurl) when you need the API base URL for custom requests.
+See [`apiCall`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#apicall).
+Use [`getApiUrl()`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#getapiurl) when you need the API base URL for custom requests.
 
 ## Auth token refresh
 
@@ -133,15 +133,15 @@ await sdk.connect({
 ```
 
 When enabled, the SDK schedules a one-shot timer from `authToken.expires`
-and calls [`emitRequestAuthTokenRefresh()`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#emitrequestauthtokenrefresh)
+and calls [`emitRequestAuthTokenRefresh()`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#emitrequestauthtokenrefresh)
 before expiry. Handshake and every auth-token update (manual, parent-pushed, or
 automatic) reschedule from the new expiry.
 
 If an automatic refresh fails or times out, the SDK retries once after 30
 seconds while the same auth token is still current and unexpired. The schedule
-is cleared by [`destroy()`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#destroy).
+is cleared by [`destroy()`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#destroy).
 
-See [`emitRequestAuthTokenRefresh`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#emitrequestauthtokenrefresh) and [`onAuthTokenRefresh`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#onauthtokenrefresh).
+See [`emitRequestAuthTokenRefresh`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#emitrequestauthtokenrefresh) and [`onAuthTokenRefresh`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#onauthtokenrefresh).
 
 ## Page settings
 
@@ -159,7 +159,7 @@ const { success } = await sdk.emitUpdatePageSettings({
 });
 ```
 
-See [`onLoadPageSettings`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#onloadpagesettings) and [`emitUpdatePageSettings`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#emitupdatepagesettings).
+See [`onLoadPageSettings`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#onloadpagesettings) and [`emitUpdatePageSettings`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#emitupdatepagesettings).
 
 ## Navigation
 
@@ -213,11 +213,11 @@ The ACK is correlated on `path` **and** `search`, so a query-only change
 processed, so `extensionSDKHost.getRoutingType()` returns the current value
 while building the ACK payload (`server` when omitted or unrecognized).
 
-See [`emitNavigationChange`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#emitnavigationchange), [`onNavigate`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#onnavigate), and [`requestNavigationChange`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDKHost.html#requestnavigationchange).
+See [`emitNavigationChange`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#emitnavigationchange), [`onNavigate`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#onnavigate), and [`requestNavigationChange`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDKHost.html#requestnavigationchange).
 
 ## Teardown
 
-Call [`destroy()`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#destroy) when the extension unloads. That also clears the `createExtensionSDK` singleton so a later create call can return a fresh instance.
+Call [`destroy()`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#destroy) when the extension unloads. That also clears the `createExtensionSDK` singleton so a later create call can return a fresh instance.
 
 ```ts
 window.addEventListener("pagehide", () => {

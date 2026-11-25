@@ -32,7 +32,7 @@ const AUTO_REFRESH_RETRY_DELAY_MS = 30_000;
 const MAX_TIMEOUT_MS = 2_147_483_647;
 
 /**
- * Public contract for talking to the Kadanza parent frame over `postMessage`.
+ * Public contract for talking to the GraFx Experience parent frame over `postMessage`.
  *
  * Requires a `tenantUrl` search param on the extension URL so
  * {@link connect} can validate the parent origin.
@@ -124,7 +124,7 @@ export interface IExtensionSDK {
   getApiUrl(): string | null;
 
   /**
-   * Calls the Kadanza Platform API with the current connection credentials.
+   * Calls the GraFx Experience Platform API with the current connection credentials.
    *
    * Requests go to {@link getApiUrl} + `endpoint`. Authorization and tenant
    * headers are managed by the SDK and cannot be overridden.

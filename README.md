@@ -1,22 +1,22 @@
-# @kadanza/extension-sdk
+# @chili-publish/experience-extension-sdk
 
-Helpers for building Kadanza extensions
+Helpers for building GraFx Experience extensions
 
-Public getting started, Admin Console setup, and API auth live on [docs.kadanza.com](https://docs.kadanza.com/developer/getting-started/). Protocol, React wiring, and TypeDoc stay in this repository.
+Public getting started, Admin Console setup, and API auth live on [docs.chiligrafx.com](https://docs.chiligrafx.com/GraFx-Developers/grafx-experience/extension-sdk/). Protocol, React wiring, and TypeDoc stay in this repository.
 
 ## Quick start with AI
 
 Fill in `<APP_NAME>` and `<EXTENSION_BUILDERS_DESCRIBE_THEIR_ADDITIONAL_FEATURE_REQUIREMENTS_HERE>`, then paste this into Cursor, Lovable, or a similar AI tool.
 
-> You are building a Kadanza extension called "<APP_NAME>".
-> It is a React + Vite + TypeScript app that uses @kadanza/extension-sdk and runs embedded in Kadanza.
+> You are building a GraFx Experience extension called "<APP_NAME>".
+> It is a React + Vite + TypeScript app that uses @chili-publish/experience-extension-sdk and runs embedded in GraFx Experience.
 >
 > Before writing code, read and follow these sources of truth:
 >
-> - Public getting started: https://docs.kadanza.com/developer/getting-started/
-> - How the host embeds you: https://github.com/kadanza-io/extension-sdk/blob/main/docs/embedding.md
-> - React setup and wiring: https://github.com/kadanza-io/extension-sdk/blob/main/docs/react-guide.md
-> - SDK flows you must support: https://github.com/kadanza-io/extension-sdk/blob/main/docs/flows.md
+> - Public getting started: https://docs.chiligrafx.com/GraFx-Developers/grafx-experience/extension-sdk/
+> - How the host embeds you: https://github.com/chili-publish/experience-extension-sdk/blob/main/docs/embedding.md
+> - React setup and wiring: https://github.com/chili-publish/experience-extension-sdk/blob/main/docs/react-guide.md
+> - SDK flows you must support: https://github.com/chili-publish/experience-extension-sdk/blob/main/docs/flows.md
 >
 > Do not invent your own host communication, handshake, or API auth. Prefer the patterns and APIs described in those docs over improvising.
 >
@@ -36,13 +36,13 @@ Fill in `<APP_NAME>` and `<EXTENSION_BUILDERS_DESCRIBE_THEIR_ADDITIONAL_FEATURE_
 
 ```bash
 # Stable
-npm install @kadanza/extension-sdk
+npm install @chili-publish/experience-extension-sdk
 
 # RC (shared testing channel on main)
-npm install @kadanza/extension-sdk@rc
+npm install @chili-publish/experience-extension-sdk@rc
 
 # Canary (feature-branch preview — see releasing docs)
-npm install @kadanza/extension-sdk@canary
+npm install @chili-publish/experience-extension-sdk@canary
 ```
 
 How we version and publish: [Releasing](docs/releasing.md).
@@ -51,9 +51,9 @@ How we version and publish: [Releasing](docs/releasing.md).
 
 ```ts
 // For ESM
-import { createExtensionSDK, type IExtensionSDK } from "@kadanza/extension-sdk";
+import { createExtensionSDK, type IExtensionSDK } from "@chili-publish/experience-extension-sdk";
 // For CommonJS
-// const { createExtensionSDK } = require("@kadanza/extension-sdk");
+// const { createExtensionSDK } = require("@chili-publish/experience-extension-sdk");
 
 const sdk: IExtensionSDK = createExtensionSDK();
 
@@ -68,20 +68,20 @@ See [Flows](docs/flows.md) for all available flows. Building with React? See [Bu
 
 ## Documentation
 
-### Public (docs.kadanza.com)
+### Public (docs.chiligrafx.com)
 
-- [Get started with the Extension SDK](https://docs.kadanza.com/developer/getting-started/) — scaffold, connect, first API call, embed
-- [Create a local extension](https://docs.kadanza.com/developer/create-local-extension/) — Admin Console registration
-- [API overview](https://docs.kadanza.com/developer/api-overview/) — OAuth refresh tokens and JWT claims
-- [Experience Extension API](https://docs.kadanza.com/developer/experience-extension-api/) — OpenAPI for platform endpoints
+- [Get started with the Extension SDK](https://docs.chiligrafx.com/GraFx-Developers/grafx-experience/extension-sdk/) — scaffold, connect, first API call, embed
+- [Create a local extension](https://docs.chiligrafx.com/GraFx-Developers/grafx-experience/create-local-extension/) — Admin Console registration
+- [API overview](https://docs.chiligrafx.com/GraFx-Developers/grafx-experience/authentication/) — OAuth refresh tokens and JWT claims
+- [Experience Extension API](https://docs.chiligrafx.com/GraFx-Developers/grafx-experience/api-reference/) — OpenAPI for platform endpoints
 
 ### In this repository
 
-- [How Kadanza embeds an extension](docs/embedding.md) — iframe, `tenantUrl`, and host API (`ExtensionSDKHost`)
+- [How GraFx Experience embeds an extension](docs/embedding.md) — iframe, `tenantUrl`, and host API (`ExtensionSDKHost`)
 - [Building a React extension](docs/react-guide.md) — Bootstrap a React app with the Extension SDK
 - [Flows](docs/flows.md) — Handshake, design tokens, API calls, token refresh, page settings, navigation
 - [Releasing](docs/releasing.md) — Changesets, stable and RC publishes (maintainers)
-- [API reference](https://kadanza-io.github.io/extension-sdk/) — TypeDoc for classes, interfaces, and payloads
+- [API reference](https://chili-publish.github.io/experience-extension-sdk/) — TypeDoc for classes, interfaces, and payloads
 
 ## Local development
 
