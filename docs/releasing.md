@@ -28,6 +28,8 @@ Publishes use [npm trusted publishing](https://docs.npmjs.com/trusted-publishers
 
 Maintainers need publish rights through a `@chili-publish` npm organisation team, with 2FA enforced. The repository must be public for provenance.
 
+The package must already exist on npm before you can configure its trusted publisher. Complete the initial package bootstrap before following these steps.
+
 1. npmjs → `@chili-publish/experience-extension-sdk` → **Settings** → **Trusted Publisher** → GitHub Actions
 2. Organization or user: `chili-publish`
 3. Repository: `experience-extension-sdk`
