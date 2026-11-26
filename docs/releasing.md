@@ -5,9 +5,9 @@ Feature branches use **canary** for pre-merge testing.
 
 | Channel | When                                                         | Install                               |
 | ------- | ------------------------------------------------------------ | ------------------------------------- |
-| Stable  | After a Version Packages PR on `main`                        | `npm i @chili-publish/experience-extension-sdk`        |
-| RC      | While `main` is in pre mode (`pre.json` has `"mode": "pre"`) | `npm i @chili-publish/experience-extension-sdk@rc`     |
-| Canary  | Manual **Release** workflow on a feature branch              | `npm i @chili-publish/experience-extension-sdk@canary` |
+| Stable  | After a Version Packages PR on `main`                        | `npm i @chili-publish/grafx-experience-extension-sdk`        |
+| RC      | While `main` is in pre mode (`pre.json` has `"mode": "pre"`) | `npm i @chili-publish/grafx-experience-extension-sdk@rc`     |
+| Canary  | Manual **Release** workflow on a feature branch              | `npm i @chili-publish/grafx-experience-extension-sdk@canary` |
 
 We use [Changesets](https://github.com/changesets/changesets). A **changeset** is a short note in `.changeset/` (e.g. `.changeset/sunny-keys-dance.md`) that says how to bump the version and what to put in the changelog. Without one, your work will not ship in a stable/RC release (and canary will refuse to publish).
 
@@ -30,9 +30,9 @@ Maintainers need publish rights through a `@chili-publish` npm organisation team
 
 The package must already exist on npm before you can configure its trusted publisher. Complete the initial package bootstrap before following these steps.
 
-1. npmjs → `@chili-publish/experience-extension-sdk` → **Settings** → **Trusted Publisher** → GitHub Actions
+1. npmjs → `@chili-publish/grafx-experience-extension-sdk` → **Settings** → **Trusted Publisher** → GitHub Actions
 2. Organization or user: `chili-publish`
-3. Repository: `experience-extension-sdk`
+3. Repository: `grafx-experience-extension-sdk`
 4. Workflow filename: `release.yml` (filename only)
 5. Allowed actions: `npm publish`
 6. After the first successful OIDC publish: package **Publishing access** → require 2FA and **disallow tokens**; delete any GitHub `NPM_TOKEN` secret and revoke the npm token
@@ -71,7 +71,7 @@ The branch must include the current `release.yml` (rebase/merge from `main` if t
 Push the branch, then: GitHub → Actions → **Release** → Run workflow → select that branch.
 
 ```bash
-npm install @chili-publish/experience-extension-sdk@canary
+npm install @chili-publish/grafx-experience-extension-sdk@canary
 # or pin 0.0.0-canary-… from the job log
 ```
 

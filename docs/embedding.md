@@ -37,7 +37,7 @@ import {
   enrichExtensionUrl,
   isValidExtensionUrl,
   type HandshakePayload,
-} from "@chili-publish/experience-extension-sdk";
+} from "@chili-publish/grafx-experience-extension-sdk";
 
 if (!isValidExtensionUrl(extensionUrl)) {
   throw new Error("Invalid extension URL");

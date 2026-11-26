@@ -1,4 +1,4 @@
-# @chili-publish/experience-extension-sdk
+# @chili-publish/grafx-experience-extension-sdk
 
 Helpers for building GraFx Experience extensions
 
@@ -9,14 +9,14 @@ Public getting started, Admin Console setup, and API auth live on [docs.chiligra
 Fill in `<APP_NAME>` and `<EXTENSION_BUILDERS_DESCRIBE_THEIR_ADDITIONAL_FEATURE_REQUIREMENTS_HERE>`, then paste this into Cursor, Lovable, or a similar AI tool.
 
 > You are building a GraFx Experience extension called "<APP_NAME>".
-> It is a React + Vite + TypeScript app that uses @chili-publish/experience-extension-sdk and runs embedded in GraFx Experience.
+> It is a React + Vite + TypeScript app that uses @chili-publish/grafx-experience-extension-sdk and runs embedded in GraFx Experience.
 >
 > Before writing code, read and follow these sources of truth:
 >
 > - Public getting started: https://docs.chiligrafx.com/GraFx-Developers/grafx-experience/extension-sdk/
-> - How the host embeds you: https://github.com/chili-publish/experience-extension-sdk/blob/main/docs/embedding.md
-> - React setup and wiring: https://github.com/chili-publish/experience-extension-sdk/blob/main/docs/react-guide.md
-> - SDK flows you must support: https://github.com/chili-publish/experience-extension-sdk/blob/main/docs/flows.md
+> - How the host embeds you: https://github.com/chili-publish/grafx-experience-extension-sdk/blob/main/docs/embedding.md
+> - React setup and wiring: https://github.com/chili-publish/grafx-experience-extension-sdk/blob/main/docs/react-guide.md
+> - SDK flows you must support: https://github.com/chili-publish/grafx-experience-extension-sdk/blob/main/docs/flows.md
 >
 > Do not invent your own host communication, handshake, or API auth. Prefer the patterns and APIs described in those docs over improvising.
 >
@@ -36,13 +36,13 @@ Fill in `<APP_NAME>` and `<EXTENSION_BUILDERS_DESCRIBE_THEIR_ADDITIONAL_FEATURE_
 
 ```bash
 # Stable
-npm install @chili-publish/experience-extension-sdk
+npm install @chili-publish/grafx-experience-extension-sdk
 
 # RC (shared testing channel on main)
-npm install @chili-publish/experience-extension-sdk@rc
+npm install @chili-publish/grafx-experience-extension-sdk@rc
 
 # Canary (feature-branch preview — see releasing docs)
-npm install @chili-publish/experience-extension-sdk@canary
+npm install @chili-publish/grafx-experience-extension-sdk@canary
 ```
 
 How we version and publish: [Releasing](docs/releasing.md).
@@ -51,9 +51,9 @@ How we version and publish: [Releasing](docs/releasing.md).
 
 ```ts
 // For ESM
-import { createExtensionSDK, type IExtensionSDK } from "@chili-publish/experience-extension-sdk";
+import { createExtensionSDK, type IExtensionSDK } from "@chili-publish/grafx-experience-extension-sdk";
 // For CommonJS
-// const { createExtensionSDK } = require("@chili-publish/experience-extension-sdk");
+// const { createExtensionSDK } = require("@chili-publish/grafx-experience-extension-sdk");
 
 const sdk: IExtensionSDK = createExtensionSDK();
 
@@ -81,7 +81,7 @@ See [Flows](docs/flows.md) for all available flows. Building with React? See [Bu
 - [Building a React extension](docs/react-guide.md) — Bootstrap a React app with the Extension SDK
 - [Flows](docs/flows.md) — Handshake, design tokens, API calls, token refresh, page settings, navigation
 - [Releasing](docs/releasing.md) — Changesets, stable and RC publishes (maintainers)
-- [API reference](https://chili-publish.github.io/experience-extension-sdk/) — TypeDoc for classes, interfaces, and payloads
+- [API reference](https://chili-publish.github.io/grafx-experience-extension-sdk/) — TypeDoc for classes, interfaces, and payloads
 
 ## Local development
 

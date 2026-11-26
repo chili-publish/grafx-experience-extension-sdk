@@ -3,7 +3,7 @@
   "compilerOptions": {
     "types": ["vite/client"],
     "paths": {
-      "@chili-publish/experience-extension-sdk": ["./src/index.ts"]
+      "@chili-publish/grafx-experience-extension-sdk": ["./src/index.ts"]
     }
   },
   "include": ["playground", "src"]

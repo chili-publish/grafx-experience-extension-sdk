@@ -1,13 +1,13 @@
 # Building a React extension
 
-Minimal pattern for wiring `@chili-publish/experience-extension-sdk` into a React app. Protocol details live in [Flows](flows.md). Public getting started: [docs.chiligrafx.com](https://docs.chiligrafx.com/GraFx-Developers/grafx-experience/extension-sdk/).
+Minimal pattern for wiring `@chili-publish/grafx-experience-extension-sdk` into a React app. Protocol details live in [Flows](flows.md). Public getting started: [docs.chiligrafx.com](https://docs.chiligrafx.com/GraFx-Developers/grafx-experience/extension-sdk/).
 
 ## Setup
 
 ```bash
 npm create vite@latest my-extension -- --template react-ts
 cd my-extension
-npm install @chili-publish/experience-extension-sdk react-router-dom
+npm install @chili-publish/grafx-experience-extension-sdk react-router-dom
 ```
 
 Use **`HashRouter`**, not `BrowserRouter`. The host adds `tenantUrl` to the iframe query string; hash routing keeps that query intact while your app navigates. Pass `routingType: "client-hash"` on `connect` so the parent can soft-navigate without reloading the iframe.
@@ -29,7 +29,7 @@ import {
   createExtensionSDK,
   type HandshakePayload,
   type IExtensionSDK,
-} from "@chili-publish/experience-extension-sdk";
+} from "@chili-publish/grafx-experience-extension-sdk";
 
 interface ExtensionSDKContextValue {
   sdk: IExtensionSDK;
@@ -192,7 +192,7 @@ function Home() {
 }
 ```
 
-See [`HandshakePayload`](https://chili-publish.github.io/experience-extension-sdk/interfaces/HandshakePayload.html).
+See [`HandshakePayload`](https://chili-publish.github.io/grafx-experience-extension-sdk/interfaces/HandshakePayload.html).
 
 ## API calls
 
@@ -260,7 +260,7 @@ Place `<NavigationTracker />` next to your routes inside the ready gate. See [Na
 
 ## Page settings
 
-When the parent opens extension settings, listen with [`onLoadPageSettings`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#onloadpagesettings) and save with [`emitUpdatePageSettings`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#emitupdatepagesettings). Full flow: [Page settings](flows.md#page-settings).
+When the parent opens extension settings, listen with [`onLoadPageSettings`](https://chili-publish.github.io/grafx-experience-extension-sdk/interfaces/IExtensionSDK.html#onloadpagesettings) and save with [`emitUpdatePageSettings`](https://chili-publish.github.io/grafx-experience-extension-sdk/interfaces/IExtensionSDK.html#emitupdatepagesettings). Full flow: [Page settings](flows.md#page-settings).
 
 ## Rules
 
