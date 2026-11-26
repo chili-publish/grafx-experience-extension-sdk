@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const README_PATH = join(ROOT, "README.md");
-const TITLE = "# @kadanza/extension-sdk";
+const TITLE = "# @chili-publish/experience-extension-sdk";
 const START = "<!-- rc-banner:start -->";
 const END = "<!-- rc-banner:end -->";
 

@@ -4,7 +4,7 @@
   "tsconfig": "./tsconfig.lib.json",
   "out": "docs/api",
   "readme": "none",
-  "hostedBaseUrl": "https://kadanza-io.github.io/extension-sdk/",
+  "hostedBaseUrl": "https://chili-publish.github.io/experience-extension-sdk/",
   "excludePrivate": true,
   "excludeInternal": true,
   "excludeExternals": true

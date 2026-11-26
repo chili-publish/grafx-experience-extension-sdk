@@ -1,4 +1,4 @@
-# @kadanza/extension-sdk
+# @chili-publish/experience-extension-sdk
 
 ## 0.3.0
 

@@ -1,23 +1,23 @@
 # Building a React extension
 
-Minimal pattern for wiring `@kadanza/extension-sdk` into a React app. Protocol details live in [Flows](flows.md). Public getting started: [docs.kadanza.com](https://docs.kadanza.com/developer/getting-started/).
+Minimal pattern for wiring `@chili-publish/experience-extension-sdk` into a React app. Protocol details live in [Flows](flows.md). Public getting started: [docs.chiligrafx.com](https://docs.chiligrafx.com/GraFx-Developers/grafx-experience/extension-sdk/).
 
 ## Setup
 
 ```bash
 npm create vite@latest my-extension -- --template react-ts
 cd my-extension
-npm install @kadanza/extension-sdk react-router-dom
+npm install @chili-publish/experience-extension-sdk react-router-dom
 ```
 
 Use **`HashRouter`**, not `BrowserRouter`. The host adds `tenantUrl` to the iframe query string; hash routing keeps that query intact while your app navigates. Pass `routingType: "client-hash"` on `connect` so the parent can soft-navigate without reloading the iframe.
 
-## KadanzaExtensionSDKProvider
+## ExtensionSDKProvider
 
 Create a provider that owns the SDK singleton, connects once, and exposes the handshake to the tree:
 
 ```tsx
-// KadanzaExtensionSDKContext.tsx
+// ExtensionSDKContext.tsx
 import {
   createContext,
   useContext,
@@ -29,18 +29,18 @@ import {
   createExtensionSDK,
   type HandshakePayload,
   type IExtensionSDK,
-} from "@kadanza/extension-sdk";
+} from "@chili-publish/experience-extension-sdk";
 
-interface KadanzaExtensionSDKContextValue {
+interface ExtensionSDKContextValue {
   sdk: IExtensionSDK;
   handshake: HandshakePayload | null;
   error: Error | null;
 }
 
-const KadanzaExtensionSDKContext =
-  createContext<KadanzaExtensionSDKContextValue | null>(null);
+const ExtensionSDKContext =
+  createContext<ExtensionSDKContextValue | null>(null);
 
-export function KadanzaExtensionSDKProvider({
+export function ExtensionSDKProvider({
   children,
 }: {
   children: ReactNode;
@@ -97,18 +97,18 @@ export function KadanzaExtensionSDKProvider({
   }, [sdk]);
 
   return (
-    <KadanzaExtensionSDKContext.Provider value={{ sdk, handshake, error }}>
+    <ExtensionSDKContext.Provider value={{ sdk, handshake, error }}>
       {children}
-    </KadanzaExtensionSDKContext.Provider>
+    </ExtensionSDKContext.Provider>
   );
 }
 
-export function useKadanzaExtensionSDK(): KadanzaExtensionSDKContextValue {
-  const value = useContext(KadanzaExtensionSDKContext);
+export function useExtensionSDK(): ExtensionSDKContextValue {
+  const value = useContext(ExtensionSDKContext);
 
   if (value === null) {
     throw new Error(
-      "useKadanzaExtensionSDK must be used within KadanzaExtensionSDKProvider",
+      "useExtensionSDK must be used within ExtensionSDKProvider",
     );
   }
 
@@ -124,13 +124,13 @@ Do **not** call `destroy()` in the connect effect cleanup — dependency changes
 // App.tsx
 import { HashRouter, Routes, Route } from "react-router-dom";
 import {
-  KadanzaExtensionSDKProvider,
-  useKadanzaExtensionSDK,
-} from "./KadanzaExtensionSDKContext";
+  ExtensionSDKProvider,
+  useExtensionSDK,
+} from "./ExtensionSDKContext";
 import { Home } from "./Home";
 
-function KadanzaExtensionSDKGate({ children }: { children: React.ReactNode }) {
-  const { handshake, error } = useKadanzaExtensionSDK();
+function ExtensionSDKGate({ children }: { children: React.ReactNode }) {
+  const { handshake, error } = useExtensionSDK();
 
   if (error !== null) {
     return <p>Failed to connect: {error.message}</p>;
@@ -146,19 +146,19 @@ function KadanzaExtensionSDKGate({ children }: { children: React.ReactNode }) {
 export function App() {
   return (
     <HashRouter>
-      <KadanzaExtensionSDKProvider>
-        <KadanzaExtensionSDKGate>
+      <ExtensionSDKProvider>
+        <ExtensionSDKGate>
           <Routes>
             <Route path="/" element={<Home />} />
           </Routes>
-        </KadanzaExtensionSDKGate>
-      </KadanzaExtensionSDKProvider>
+        </ExtensionSDKGate>
+      </ExtensionSDKProvider>
     </HashRouter>
   );
 }
 ```
 
-Wrap order: `HashRouter` → `KadanzaExtensionSDKProvider` → ready gate → routes.
+Wrap order: `HashRouter` → `ExtensionSDKProvider` → ready gate → routes.
 
 ## Handshake data
 
@@ -171,7 +171,7 @@ Read it from the hook:
 
 ```tsx
 function Home() {
-  const { handshake } = useKadanzaExtensionSDK();
+  const { handshake } = useExtensionSDK();
 
   if (handshake === null) {
     return null;
@@ -192,16 +192,16 @@ function Home() {
 }
 ```
 
-See [`HandshakePayload`](https://kadanza-io.github.io/extension-sdk/interfaces/HandshakePayload.html).
+See [`HandshakePayload`](https://chili-publish.github.io/experience-extension-sdk/interfaces/HandshakePayload.html).
 
 ## API calls
 
 ```tsx
 import { useEffect, useState } from "react";
-import { useKadanzaExtensionSDK } from "./KadanzaExtensionSDKContext";
+import { useExtensionSDK } from "./ExtensionSDKContext";
 
 function UserGreeting() {
-  const { sdk } = useKadanzaExtensionSDK();
+  const { sdk } = useExtensionSDK();
   const [name, setName] = useState<string | null>(null);
 
   useEffect(() => {
@@ -232,10 +232,10 @@ Notify the parent when the extension route changes, and handle host-driven soft 
 ```tsx
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useKadanzaExtensionSDK } from "./KadanzaExtensionSDKContext";
+import { useExtensionSDK } from "./ExtensionSDKContext";
 
-export function KadanzaNavigationTracker() {
-  const { sdk } = useKadanzaExtensionSDK();
+export function NavigationTracker() {
+  const { sdk } = useExtensionSDK();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -256,11 +256,11 @@ export function KadanzaNavigationTracker() {
 }
 ```
 
-Place `<KadanzaNavigationTracker />` next to your routes inside the ready gate. See [Navigation](flows.md#navigation).
+Place `<NavigationTracker />` next to your routes inside the ready gate. See [Navigation](flows.md#navigation).
 
 ## Page settings
 
-When the parent opens extension settings, listen with [`onLoadPageSettings`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#onloadpagesettings) and save with [`emitUpdatePageSettings`](https://kadanza-io.github.io/extension-sdk/interfaces/IExtensionSDK.html#emitupdatepagesettings). Full flow: [Page settings](flows.md#page-settings).
+When the parent opens extension settings, listen with [`onLoadPageSettings`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#onloadpagesettings) and save with [`emitUpdatePageSettings`](https://chili-publish.github.io/experience-extension-sdk/interfaces/IExtensionSDK.html#emitupdatepagesettings). Full flow: [Page settings](flows.md#page-settings).
 
 ## Rules
 

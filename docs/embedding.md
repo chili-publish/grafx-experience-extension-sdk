@@ -1,23 +1,23 @@
-# How Kadanza embeds an extension
+# How GraFx Experience embeds an extension
 
-Your extension runs inside the Kadanza web app as a full-size `<iframe>`. The host sets `src` to your extension’s public HTTPS URL and talks to the iframe with `window.postMessage`, only with that URL’s origin.
+Your extension runs inside the GraFx Experience web app as a full-size `<iframe>`. The host sets `src` to your extension’s public HTTPS URL and talks to the iframe with `window.postMessage`, only with that URL’s origin.
 
-This page is for **extension builders** (iframe `src` and `tenantUrl`) and for the **Kadanza parent app** (host API). Builders should not reimplement the wire protocol — use `createExtensionSDK()` from this package. Protocol payloads are in [Flows](flows.md).
+This page is for **extension builders** (iframe `src` and `tenantUrl`) and for the **GraFx Experience parent app** (host API). Builders should not reimplement the wire protocol — use `createExtensionSDK()` from this package. Protocol payloads are in [Flows](flows.md).
 
 ## iframe `src`
 
-The host starts from the configured extension URL (**Base URL** on the local extension), then adds a `tenantUrl` **search parameter**. That param’s value is the Kadanza parent app’s origin. It exists only on the iframe `src` query string — not as a separate parent-window field.
+The host starts from the configured extension URL (**Base URL** on the local extension), then adds a `tenantUrl` **search parameter**. That param’s value is the GraFx Experience parent app’s origin. It exists only on the iframe `src` query string — not as a separate parent-window field.
 
 Example after the host enriches `src`:
 
 ```html
 <iframe
-  src="https://my-extension.example.com?tenantUrl=https%3A%2F%2Facme.kadanza.io"
+  src="https://my-extension.example.com?tenantUrl=https%3A%2F%2Facme.example.com"
 />
 ```
 
 - `https://my-extension.example.com` — your extension’s deployed origin.
-- `tenantUrl=https://acme.kadanza.io` — parent origin, appended so the extension SDK can validate `postMessage` origins.
+- `tenantUrl=https://acme.example.com` — parent origin, appended so the extension SDK can validate `postMessage` origins.
 
 The host sends and accepts `postMessage` only against the extension URL’s origin (`https://my-extension.example.com` in the example).
 
@@ -25,7 +25,7 @@ The host sends and accepts `postMessage` only against the extension URL’s orig
 
 ## Host integration
 
-The Kadanza parent app should use the host API from this package — do not reimplement the wire protocol. Third-party builders do not call `ExtensionSDKHost`; they call `createExtensionSDK()` in the iframe.
+The GraFx Experience parent app should use the host API from this package — do not reimplement the wire protocol. Third-party builders do not call `ExtensionSDKHost`; they call `createExtensionSDK()` in the iframe.
 
 `HANDSHAKE_ACK` context is optional. Send `designTokens` whenever a tenant is in context. Include `spaceId` / `pageId` only on Experience Pages. The child SDK still connects if a field is omitted.
 
@@ -37,7 +37,7 @@ import {
   enrichExtensionUrl,
   isValidExtensionUrl,
   type HandshakePayload,
-} from "@kadanza/extension-sdk";
+} from "@chili-publish/experience-extension-sdk";
 
 if (!isValidExtensionUrl(extensionUrl)) {
   throw new Error("Invalid extension URL");

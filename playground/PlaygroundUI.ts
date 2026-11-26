@@ -8,7 +8,7 @@ import type {
   PageSettings,
   PageSettingsUpdatedPayload,
   UpdatePageSettingsPayload,
-} from "@kadanza/extension-sdk";
+} from "@chili-publish/experience-extension-sdk";
 
 export interface PlaygroundUIOptions {
   onEmitRequestAuthTokenRefresh: () => Promise<AuthToken>;
@@ -90,7 +90,7 @@ export class PlaygroundUI {
 
   connected(payload: HandshakePayload): void {
     this.#appendLog(
-      `connected tenant=${payload.extensionDetails.tenantDomain}`,
+      `connected tenant=${payload.extensionDetails?.tenantDomain ?? "unknown"}`,
     );
     this.#setActionsEnabled(true);
     this.#renderFromSdk({ handshake: payload });
