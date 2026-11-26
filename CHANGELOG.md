@@ -1,4 +1,4 @@
-# @chili-publish/experience-extension-sdk
+# @chili-publish/grafx-experience-extension-sdk
 
 ## 0.3.0
 

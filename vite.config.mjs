@@ -17,7 +17,7 @@ export default defineConfig(({ command }) => {
     },
     resolve: {
       alias: {
-        "@chili-publish/experience-extension-sdk": resolve(rootDir, "src/index.ts"),
+        "@chili-publish/grafx-experience-extension-sdk": resolve(rootDir, "src/index.ts"),
       },
     },
   };

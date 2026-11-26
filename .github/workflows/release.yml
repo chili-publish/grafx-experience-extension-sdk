@@ -100,6 +100,6 @@ jobs:
       - name: Print install hint
         run: |
           version=$(node -p "require('./package.json').version")
-          echo "Published @chili-publish/experience-extension-sdk@${version}"
-          echo "Install latest canary:  npm install @chili-publish/experience-extension-sdk@canary"
-          echo "Pin this build:        npm install @chili-publish/experience-extension-sdk@${version}"
+          echo "Published @chili-publish/grafx-experience-extension-sdk@${version}"
+          echo "Install latest canary:  npm install @chili-publish/grafx-experience-extension-sdk@canary"
+          echo "Pin this build:        npm install @chili-publish/grafx-experience-extension-sdk@${version}"

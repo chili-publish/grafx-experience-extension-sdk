@@ -8,7 +8,7 @@ import type {
   PageSettings,
   PageSettingsUpdatedPayload,
   UpdatePageSettingsPayload,
-} from "@chili-publish/experience-extension-sdk";
+} from "@chili-publish/grafx-experience-extension-sdk";
 
 export interface PlaygroundUIOptions {
   onEmitRequestAuthTokenRefresh: () => Promise<AuthToken>;

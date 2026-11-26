@@ -1,6 +1,6 @@
 // Demonstrates the public extension SDK API.
 
-import { createExtensionSDK } from "@chili-publish/experience-extension-sdk";
+import { createExtensionSDK } from "@chili-publish/grafx-experience-extension-sdk";
 import { PlaygroundUI } from "./PlaygroundUI";
 
 const sdk = createExtensionSDK();
