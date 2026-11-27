@@ -1,6 +1,6 @@
 {
   "name": "@chili-publish/grafx-experience-extension-sdk",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Helpers for building GraFx Experience extensions",
   "keywords": [
     "chili-publish",

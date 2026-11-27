@@ -1,5 +1,11 @@
 # @chili-publish/grafx-experience-extension-sdk
 
+## 0.3.1
+
+### Patch Changes
+
+- 11b31ce: Verify automated public npm publishing with provenance for the GraFx Experience Extension SDK.
+
 ## 0.3.0
 
 ### Minor Changes
