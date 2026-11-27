@@ -81,7 +81,11 @@ See [Flows](docs/flows.md) for all available flows. Building with React? See [Bu
 - [Building a React extension](docs/react-guide.md) — Bootstrap a React app with the Extension SDK
 - [Flows](docs/flows.md) — Handshake, design tokens, API calls, token refresh, page settings, navigation
 - [Releasing](docs/releasing.md) — Changesets, stable and RC publishes (maintainers)
-- [API reference](https://chili-publish.github.io/grafx-experience-extension-sdk/) — TypeDoc for classes, interfaces, and payloads
+- [Local API reference](#local-api-reference) — TypeDoc for classes, interfaces, and payloads
+
+### Local API reference
+
+Run `npm run docs` after installing dependencies, then open `docs/api/index.html` locally.
 
 ## Local development
 

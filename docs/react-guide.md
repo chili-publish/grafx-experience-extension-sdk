@@ -1,5 +1,7 @@
 # Building a React extension
 
+API symbols are documented in the [local API reference](../README.md#local-api-reference).
+
 Minimal pattern for wiring `@chili-publish/grafx-experience-extension-sdk` into a React app. Protocol details live in [Flows](flows.md). Public getting started: [docs.chiligrafx.com](https://docs.chiligrafx.com/GraFx-Developers/grafx-experience/extension-sdk/).
 
 ## Setup
@@ -192,7 +194,7 @@ function Home() {
 }
 ```
 
-See [`HandshakePayload`](https://chili-publish.github.io/grafx-experience-extension-sdk/interfaces/HandshakePayload.html).
+See `HandshakePayload`.
 
 ## API calls
 
@@ -260,7 +262,7 @@ Place `<NavigationTracker />` next to your routes inside the ready gate. See [Na
 
 ## Page settings
 
-When the parent opens extension settings, listen with [`onLoadPageSettings`](https://chili-publish.github.io/grafx-experience-extension-sdk/interfaces/IExtensionSDK.html#onloadpagesettings) and save with [`emitUpdatePageSettings`](https://chili-publish.github.io/grafx-experience-extension-sdk/interfaces/IExtensionSDK.html#emitupdatepagesettings). Full flow: [Page settings](flows.md#page-settings).
+When the parent opens extension settings, listen with `onLoadPageSettings` and save with `emitUpdatePageSettings`. Full flow: [Page settings](flows.md#page-settings).
 
 ## Rules
 
