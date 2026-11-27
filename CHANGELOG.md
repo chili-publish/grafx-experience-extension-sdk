@@ -1,5 +1,11 @@
 # @chili-publish/grafx-experience-extension-sdk
 
+## 1.0.0
+
+### Major Changes
+
+- db088ea: Package renamed from `@kadanza/extension-sdk`. No API change.
+
 ## 0.3.1
 
 ### Patch Changes
