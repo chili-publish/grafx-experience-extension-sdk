@@ -4,7 +4,6 @@
   "tsconfig": "./tsconfig.lib.json",
   "out": "docs/api",
   "readme": "none",
-  "hostedBaseUrl": "https://chili-publish.github.io/grafx-experience-extension-sdk/",
   "excludePrivate": true,
   "excludeInternal": true,
   "excludeExternals": true
