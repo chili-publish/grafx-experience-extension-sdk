@@ -48,7 +48,7 @@
     "docs:check": "typedoc --emit none",
     "check:types": "npx --yes @arethetypeswrong/cli --pack .",
     "changeset": "changeset",
-    "version-packages": "changeset version",
+    "version-packages": "changeset version && npm install --package-lock-only --ignore-scripts --no-audit --no-fund",
     "version-packages:snapshot": "changeset version --snapshot canary",
     "release": "changeset publish",
     "release:canary": "changeset publish --tag canary --no-git-tag",
